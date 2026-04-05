@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhập Thông Tin - DSS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background: linear-gradient(135deg, #96c9ff 0%, #d4a0ff 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgb(255, 255, 255);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #254655;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        label span {
+            color: #e74c3c;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #96c9ff 0%, #d4a0ff 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-back {
+            background: #f5f5f5;
+            color: #666;
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        .btn-back:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .info-text {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .required-note {
+            text-align: center;
+            color: #999;
+            font-size: 0.85em;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            .btn-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Nhập Thông Tin Cá Nhân</h1>
+        <p class="subtitle">Vui lòng điền đầy đủ thông tin để nhận được kết quả chính xác nhất</p>
+
+        <div class="info-text">
+            ℹ️ <strong>Lưu ý:</strong> Tất cả thông tin của bạn được bảo mật và chỉ dùng để phân tích chế độ ăn phù hợp.
+        </div>
+
+        <form id="predictionForm">
+            <div class="form-group">
+                <label for="ho_ten">Họ và Tên <span>*</span></label>
+                <input type="text" id="ho_ten" name="ho_ten" placeholder="Nguyễn Văn A" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tuoi">Tuổi <span>*</span></label>
+                    <input type="number" id="tuoi" name="tuoi" min="10" max="100" placeholder="25" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="gioi_tinh">Giới Tính <span>*</span></label>
+                    <select id="gioi_tinh" name="gioi_tinh" required>
+                        <option value="">-- Chọn giới tính --</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="chieu_cao">Chiều Cao (cm) <span>*</span></label>
+                    <input type="number" id="chieu_cao" name="chieu_cao" min="100" max="250" step="0.1" placeholder="170" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="can_nang">Cân Nặng (kg) <span>*</span></label>
+                    <input type="number" id="can_nang" name="can_nang" min="30" max="300" step="0.1" placeholder="65" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="muc_tieu">Mục Tiêu <span>*</span></label>
+                <select id="muc_tieu" name="muc_tieu" required>
+                    <option value="">-- Chọn mục tiêu --</option>
+                    <option value="giam_can">📉 Giảm cân</option>
+                    <option value="duy_tri">⚖️ Duy trì cân nặng</option>
+                    <option value="tang_can">📈 Tăng cân</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="hoat_dong">Mức độ Hoạt động <span>*</span></label>
+                <select id="hoat_dong" name="hoat_dong" required>
+                    <option value="">-- Chọn mức độ --</option>
+                    <option value="it_hoat_dong">😴 Ít hoạt động (ngồi nhiều, ít vận động)</option>
+                    <option value="hoat_dong_nhe">🚶 Hoạt động nhẹ (vận động 1-3 ngày/tuần)</option>
+                    <option value="hoat_dong_trung_binh">🏃 Hoạt động trung bình (vận động 3-5 ngày/tuần)</option>
+                    <option value="hoat_dong_nang">💪 Hoạt động nặng (vận động 6-7 ngày/tuần)</option>
+                    <option value="hoat_dong_rat_nang">🏋️ Hoạt động rất nặng (vận động cường độ cao + công việc nặng)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="benh_ly">Tiền Sử Bệnh Lý (nếu có)</label>
+                <select id="benh_ly" name="benh_ly">
+                    <option value="Không có">Không có</option>
+                    <option value="Tiểu đường">Tiểu đường</option>
+                    <option value="Huyết áp cao">Huyết áp cao</option>
+                    <option value="Tim mạch">Tim mạch</option>
+                    <option value="Dạ dày">Dạ dày</option>
+                    <option value="Khác">Khác</option>
+                </select>
+            </div>
+
+            <p class="required-note">Các trường đánh dấu <span style="color: #e74c3c;">*</span> là bắt buộc</p>
+        
+            <div class="btn-container">
+                <button type="button" class="btn btn-back" onclick="window.location.href='/'">
+                    ← Quay Lại
+                </button>
+
+                <button type="submit" class="btn btn-submit ">Phân Tích 🎯</button>
+        </form>
+        
+        <div class="loading" id="loading">
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            document.getElementById('loading').style.display = 'block';
+            e.target.style.display = 'none';
+            
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    window.location.href = '/result';
+                } else {
+                    alert('Lỗi: ' + result.error);
+                    document.getElementById('loading').style.display = 'none';
+                    e.target.style.display = 'block';
+                }
+            } catch (error) {
+                alert('Lỗi: ' + error.message);
+                document.getElementById('loading').style.display = 'none';
+                e.target.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

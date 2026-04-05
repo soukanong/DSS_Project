@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết Quả Phân Tích - DSS</title>
+    <style>
+        /* (Toàn bộ CSS của bạn giữ nguyên - không thay đổi) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background: linear-gradient(135deg, #96c9ff 0%, #d4a0ff 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            background: rgb(255, 255, 255);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(14, 14, 14, 0.3);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .section {
+            background: #bfdfff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .info-label {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            color: #333;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .bmi-indicator {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .bmi-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .bmi-category {
+            font-size: 18px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .diet-card {
+            background: linear-gradient(135deg, #96c9ff 0%, #d4a0ff 100%);
+            color: rgb(67, 88, 79);
+            padding: 50px;
+            border-radius: 55px;
+            margin-top: 55px;
+        }
+        
+        .diet-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .diet-card p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .food-list {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .food-list h4 {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .food-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .food-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .food-list li p {
+             margin-bottom: 0;
+             font-size: 14px;
+             opacity: 0.8;
+        }
+        
+        .food-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .ml-predictions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .ml-card {
+            background: rgb(255, 255, 255);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .ml-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        
+        .ml-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .ml-card .unit {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            font-family: "Times New Roman", Times, serif;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .no-data h2 {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 16px; 
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .badge-success {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .badge-warning {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .badge-danger {
+            background: #f44336;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Vùng nội dung này sẽ được JavaScript điền vào -->
+        <div id="resultContent">
+            <!-- Thông báo dự phòng khi JS lỗi -->
+            <div class="no-data">
+                <h2>⚠️ Không có dữ liệu</h2>
+                <p>Vui lòng quay lại trang dự đoán và nhập thông tin</p>
+                <a href="/predict" class="btn btn-primary" style="margin-top: 20px; display: inline-block;">Quay lại</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ================================================== -->
+    <!-- === PHẦN SCRIPT ĐÃ ĐƯỢC CẬP NHẬT (GỘP LOGIC) === -->
+    <!-- ================================================== -->
+    <script>
+        function getBMIBadge(bmi) {
+            if (bmi < 18.5) return 'badge-warning';
+            if (bmi < 23) return 'badge-success';
+            if (bmi < 25) return 'badge-warning';
+            return 'badge-danger';
+        }
+
+        // === NOTE: KHÔI PHỤC HÀM TẠO DANH SÁCH BỮA ĂN (LỖI) ===
+        // Hàm này tạo HTML cho danh sách 5 bữa ăn bị lỗi
+        function createMealList(meals) {
+            if (!meals || meals.length === 0) {
+                return '<li>Không tìm thấy bữa ăn phù hợp nào trong CSDL.</li>';
+            }
+            
+            return meals.map(meal => {
+                // Đây là lý do nó hiển thị sai:
+                // Nó lấy thông số TỔNG (Calories, Proteins) từ HỒ SƠ NGƯỜI DÙNG
+                // thay vì thông số của BỮA ĂN.
+                let details = `
+                    ${Math.round(meal.Calories)} kcal | 
+                    P: ${Math.round(meal.Proteins)}g | 
+                    F: ${Math.round(meal.Fats)}g | 
+                    C: ${Math.round(meal.Carbs)}g
+                `;
+
+                return `
+                    <li>
+                        <strong>${meal.Meal || 'Bữa ăn gợi ý'}</strong> <!-- Không có cột Meal nên hiển thị 'Bữa ăn gợi ý' -->
+                        <p>${details}</p>
+                    </li>
+                `;
+            }).join('');
+        }
+        
+        async function displayResult() {
+            try {
+                const response = await fetch('/api/get_result');
+                if (!response.ok) throw new Error('No data found');
+                const data = await response.json();
+
+                // Lấy đúng key từ JSON
+                const user = data.user_info;
+                const health = data.health_metrics;
+                const nutrition = data.predicted_nutrition; 
+                const diet = data.diet_info;              
+                const meals = data.meal_recommendations; // <-- KHÔI PHỤC KEY NÀY
+
+                // === TẠO HTML CHO CẢ HAI DANH SÁCH ===
+                
+                // 1. Danh sách 5 bữa ăn (bị lỗi)
+                const mealHtml = createMealList(meals);
+
+                // 2. Danh sách thực phẩm chung (đúng)
+                const foodsHtml = (diet.foods && diet.foods.length > 0)
+                    ? diet.foods.map(food => `<li>• ${food}</li>`).join('')
+                    : '<li>Không có gợi ý cụ thể.</li>';
+
+                const avoidsHtml = (diet.avoid && diet.avoid.length > 0)
+                    ? diet.avoid.map(food => `<li>• ${food}</li>`).join('')
+                    : '<li>Không có gợi ý cụ thể.</li>';
+                
+                // Cập nhật HTML string
+                const html = `
+                    <div class="header">
+                        <h1>✨ Kết Quả Phân Tích</h1>
+                        <p>Xin chào <strong>${user.name}</strong>! Đây là kết quả phân tích chi tiết của bạn</p>
+                    </div>
+                    
+                    <!-- Thông tin cá nhân -->
+                    <div class="section">
+                        <div class="section-title"><span>👤</span><span>Thông Tin Cá Nhân</span></div>
+                        <div class="info-grid">
+                            <div class="info-item"><div class="info-label">Họ và Tên</div><div class="info-value">${user.name}</div></div>
+                            <div class="info-item"><div class="info-label">Tuổi</div><div class="info-value">${user.age} tuổi</div></div>
+                            <div class="info-item"><div class="info-label">Giới tính</div><div class="info-value">${user.gender}</div></div>
+                            <div class="info-item"><div class="info-label">Cân nặng</div><div class="info-value">${user.weight} kg</div></div>
+                            <div class="info-item"><div class="info-label">Chiều cao</div><div class="info-value">${user.height} cm</div></div>
+                             <div class="info-item"><div class="info-label">Mục tiêu</div><div class="info-value">${user.goal.replace('_', ' ')}</div></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chỉ số sức khỏe -->
+                    <div class="section">
+                        <div class="section-title"><span>📊</span><span>Chỉ Số Sức Khỏe</span></div>
+                        <div class="bmi-indicator">
+                            <div class="bmi-value">${health.bmi}</div>
+                            <div class="bmi-category">
+                                ${health.bmi_category}
+                                <span class="badge ${getBMIBadge(health.bmi)}">${health.bmi_category}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Nhu cầu Dinh dưỡng -->
+                    <div class="section">
+                        <div class="section-title"><span>🤖</span><span>Nhu Cầu Dinh Dưỡng Dự Đoán (mỗi ngày)</span></div>
+                        <div class="ml-predictions">
+                            <div class="ml-card"><h4>Calories</h4><div class="value">${nutrition.calories}</div><div class="unit">kcal</div></div>
+                            <div class="ml-card"><h4>Protein</h4><div class="value">${nutrition.proteins}</div><div class="unit">grams</div></div>
+                            <div class="ml-card"><h4>Fats</h4><div class="value">${nutrition.fats}</div><div class="unit">grams</div></div>
+                            <div class="ml-card"><h4>Carbs</h4><div class="value">${nutrition.carbs}</div><div class="unit">grams</div></div>
+                        </div>
+                    </div>
+                    
+                    <!-- === FIX: HIỂN THỊ CẢ HAI DANH SÁCH === -->
+                    <div class="section">
+                        <div class="section-title"><span>🍽️</span><span>Chế Độ Ăn Được Đề Xuất</span></div>
+                        <div class="diet-card">
+                            <h3>${diet.name}</h3>
+                            <p>${diet.description}</p>
+                            
+                            <!-- 1. DANH SÁCH 5 "BỮA ĂN" (LỖI) -->
+                            <div class="food-list" style="margin-top: 20px; background: rgba(0,0,0,0.1);">
+                                <h4>5 hồ sơ phù hợp nhất (lọc từ CSDL người dùng):</h4>
+                                <ul>
+                                    ${mealHtml}
+                                </ul>
+                            </div>
+
+                            <!-- 2. DANH SÁCH THỰC PHẨM CHUNG (ĐÚNG) -->
+                            <div class="food-list" style="margin-top: 20px;">
+                                <h4>✅ Thực phẩm khuyên dùng (Chung):</h4>
+                                <ul>
+                                    ${foodsHtml}
+                                </ul>
+                            </div>
+                            
+                            <div class="food-list" style="margin-top: 20px;">
+                                <h4>❌ Thực phẩm nên tránh (Chung):</h4>
+                                <ul>
+                                    ${avoidsHtml}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <a href="/predict" class="btn btn-primary">Phân tích lại</a>
+                        <button onclick="window.print()" class="btn btn-secondary">In kết quả</button>
+                        <a href="/" class="btn btn-secondary">Về trang chủ</a>
+                    </div>
+                `;
+                
+                document.getElementById('resultContent').innerHTML = html;
+
+            } catch (error) {
+                console.error('LỖI HIỂN THỊ DỮ LIỆU:', error);
+            }
+        }
+        
+        displayResult();
+    </script>
+</body>
+</html>
